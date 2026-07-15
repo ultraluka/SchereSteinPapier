@@ -1,0 +1,101 @@
+import random
+
+def show_menu():
+    print("\n=== КАМІНЬ, НОЖИЦІ, ПАПІР + КОЛОДЯЗЬ ===")                                           #              ⢰⠑⠉⠉⠊⢆⠀                                                        
+    print("1. Зіграти раунд")                                                                     #              ⡇⡈⡤⢁⠀⠈⠑⠢⠴⢱
+    print("2. Показати поточний рахунок")                                                         #              ⡇⠈⠉⠁⠀⠀⠀⠀⠀ ⢸                                                                           
+    print("3. Правила гри")                                                                       #              ⢇⠀⠀⠀⠀⠀⠀    ⢸
+    print("0. Вихід")                                                                             #              ⠘⠔⠹⡠⠋⠹⡠⠛⠔⠁
+
+def get_menu_choice():
+    while True:
+        choice = input("Оберіть дію: ").strip()
+        if choice in ["1", "2", "3", "0"]:
+            return int(choice)
+        print("Помилка! Будь ласка, введіть цифру від 0 до 3.")
+
+def show_rules():
+    print("\n--- ПРАВИЛА ГРИ ---")
+    print("• Камінь перемагає Ножиці (тупить їх).")
+    print("• Ножиці перемагають Папір (ріжуть його).")
+    print("• Папір перемагає Камінь та Колодязь (загортає/накриває їх).")
+    print("• Колодязь перемагає Камінь та Ножиці (вони тонуть у ньому).")
+    print("Гра триває, поки ви не вирішите вийти через меню.")
+
+def get_user_choice():
+    print("\nВаш хід:")
+    print("1. Камінь")
+    print("2. Ножиці")
+    print("3. Папір")
+    print("4. Колодязь")
+    
+    while True:
+        choice = input("Оберіть свій варіант (1-4): ").strip()
+        if choice in ["1", "2", "3", "4"]:
+            options = {1: "Камінь", 2: "Ножиці", 3: "Папір", 4: "Колодязь"}
+            return options[int(choice)]
+        print("Помилка! Введіть 1, 2, 3 або 4.")
+
+def determine_winner(user, computer):
+    if user == computer:
+        return "draw"
+        
+    winning_rules = {
+        "Камінь": ["Ножиці"],
+        "Ножиці": ["Папір"],
+        "Папір": ["Камінь", "Колодязь"],
+        "Колодязь": ["Камінь", "Ножиці"]
+    }
+    
+    if computer in winning_rules[user]:
+        return "user"
+    else:
+        return "computer"
+
+def play_round(score):
+    choices = ["Камінь", "Ножиці", "Папір", "Колодязь"]
+    
+    user_move = get_user_choice()
+    computer_move = random.choice(choices)
+    
+    print(f"\nВи обрали: {user_move}")
+    print(f"Комп'ютер обрав: {computer_move}")
+    
+    result = determine_winner(user_move, computer_move)
+    
+    if result == "draw":
+        print("Нічия в цьому раунді!")
+        score["draws"] += 1
+    elif result == "user":
+        print("Ви перемогли в цьому раунді!")
+        score["user"] += 1
+    else:
+        print("Комп'ютер переміг у цьому раунді.")
+        score["computer"] += 1
+
+def show_score(score):
+    print("\n=== ПОТОЧНИЙ РАХУНОК ===")
+    print(f"Гравець: {score['user']}")
+    print(f"Комп'ютер: {score['computer']}")
+    print(f"Нічиї: {score['draws']}")
+
+def main():
+    game_score = {"user": 0, "computer": 0, "draws": 0}
+    
+    while True:
+        show_menu()
+        choice = get_menu_choice()
+        
+        if choice == 1:
+            play_round(game_score)
+        elif choice == 2:
+            show_score(game_score)
+        elif choice == 3:
+            show_rules()
+        elif choice == 0:
+            print("\nДякуємо за гру! Заходьте ще.")
+            show_score(game_score)
+            break
+
+if __name__ == "__main__":
+    main()
