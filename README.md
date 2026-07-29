@@ -4,7 +4,7 @@ A Python console game that extends the classic "Rock, Paper, Scissors" by introd
 
 ## 🎮 Game Rules
 The addition of the **Well** creates a new dynamic and requires updated conditional logic:
-- 🪨 **Rock** beats Scissors (blunts them).
+- 🗿 **Rock** beats Scissors (blunts them).
 - ✂️ **Scissors** beat Paper (cut it).
 - 📄 **Paper** beats Rock and Well (covers them).
 - 🕳️ **Well** beats Rock and Scissors (they sink inside).
